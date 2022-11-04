@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  p rows:#{query.rows} , columns:#{query.cols}
+  - var rows=Number(query.rows)
+  - var cols=Number(query.cols)
+  p Please pass query parameters to URL
+  if !(Number.isInteger(rows)) || !(Number.isInteger(cols))
+    p Entered parameter values are not integers
+  else if rows < 1 && rows > 10
+    p The entered rows value should be in the range 1 to 10.
+  else if cols < 1 && cols > 10
+    p The entered cols value should be in the range 1 to 10.
+  else
+    table#outer
+      - for(let i=1; i<=rows; i++) {
+        tr#middle
+        - for(let j=1; j<=cols; j++) {
+          td= i + rows * (j-1)
+        - }
+      - }
