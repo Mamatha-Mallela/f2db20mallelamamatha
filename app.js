@@ -4,11 +4,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true});
+
+
 var indexRouter = require('./routes/index');
-var VehicleRouter = require('./routes/Vehicle');
+var vehicleRouter = require('./routes/vehicle');
 var gridbuildRouter = require('./routes/gridbuild');
 var selectorRouter = require('./routes/selector');
 var usersRouter = require('./routes/users');
+var vehicle = require("./models/vehicle");
+var resourceRouter = require("./routes/resource");
 
 var app = express();
 
@@ -23,10 +31,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/Vehicle', VehicleRouter);
+app.use('/vehicle', vehicleRouter);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
 app.use('/users', usersRouter);
+app.use("/resource",resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,5 +52,42 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")
+});
+
+// We can seed the collection if needed on server start
+async function recreateDB(){
+  // Delete everything
+  await vehicle.deleteMany();
+
+  let instance1 = new vehicle({vehicle_Brand:"Ford",vehicle_model:"SUV",vehicle_price:"20000"});
+  instance1.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("First object saved")
+  });
+ 
+  let instance2 = new vehicle({vehicle_Brand:"Honda",vehicle_model:"Sedan",vehicle_price:"18500"});
+  instance2.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("Second object saved")
+  });
+ 
+  let instance3 = new vehicle({vehicle_Brand:"Toyota",vehicle_model:"Sports",vehicle_price:"21750"});
+  instance3.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("Third object saved")
+  });
+ }
+ 
+ 
+ let reseed = true;
+ if (reseed) { recreateDB();}
 
 module.exports = app;
