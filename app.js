@@ -11,10 +11,10 @@ mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: t
 
 
 var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 var vehicleRouter = require('./routes/vehicle');
 var gridbuildRouter = require('./routes/gridbuild');
 var selectorRouter = require('./routes/selector');
-var usersRouter = require('./routes/users');
 var vehicle = require("./models/vehicle");
 var resourceRouter = require("./routes/resource");
 
@@ -31,10 +31,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/vehicle', vehicleRouter);
+app.use('/users', usersRouter);
+app.use('/vehicles', vehicleRouter);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
-app.use('/users', usersRouter);
 app.use("/resource",resourceRouter);
 
 // catch 404 and forward to error handler
