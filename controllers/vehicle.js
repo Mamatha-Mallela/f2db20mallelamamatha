@@ -14,9 +14,19 @@ exports.vehicle_list = async function(req, res) {
 
 
 // for a specific vehicle.
-exports.vehicle_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: vehicle detail: ' + req.params.id);
-};
+
+ // for a specific vehicle.
+exports.vehicle_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await vehicle.findById(req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+   };
+
 
 
 // Handle vehicle create on POST.
@@ -41,16 +51,40 @@ exports.vehicle_create_post = async function(req, res) {
 };
 
 
-// Handle vehicle delete form on DELETE.
-exports.vehicle_delete = function(req, res) {
- res.send('NOT IMPLEMENTED: vehicle delete DELETE ' + req.params.id);
-};
+// Handle vehicle delete on DELETE.
+exports.vehicle_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await vehicle.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+   };
 
 
 // Handle vehicle update form on PUT.
-exports.vehicle_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: vehicle update PUT' + req.params.id);
+exports.vehicle_update_put = async function (req, res) {
+    console.log(`update on id ${req.params.id} with body
+    ${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await vehicle.findById(req.params.id)
+        // Do updates of properties
+        if (req.body.vehicle_Brand) toUpdate.vehicle_Brand = req.body.vehicle_Brand;
+        if (req.body.vehicle_model) toUpdate.vehicle_model = req.body.vehicle_model;
+        if (req.body.vehicle_price) toUpdate.vehicle_price = req.body.vehicle_price;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id}
+    failed`);
+    }
 };
+
 
 // VIEWS
 // Handle a show all view
