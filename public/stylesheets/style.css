@@ -11,3 +11,21 @@ a {
   background-color: aquamarine;
   width: 200px;
  }
+
+#vehicle_Brand {
+  border-color: #04ba71;
+  box-shadow: 0 0 0 0.2rem #04ba71;
+  box-sizing: border-box;
+} 
+
+#vehicle_model {
+  border-color: #04ba71;
+  box-shadow: 0 0 0 0.2rem #04ba71;
+  box-sizing: border-box;
+} 
+
+#vehicle_price {
+  border-color: #04ba71;
+  box-shadow: 0 0 0 0.2rem #04ba71;
+  box-sizing: border-box;
+} 

@@ -1,17 +1,21 @@
 extends layout
 block content
   h1= title
-  form(id='vehicleForm', action="/resource/vehicles", method="POST")
+  form(id='vehicleForm', action="/resource/vehicles", class="p-5 mb-5 bg-info col-lg-6 offset-lg-3 justify-content-center" method="POST")
+    br 
     div.form-group
-      label.vehicleAttr(for='vehicle_Brand') vehicle Brand
-      input#vehicle_Brand(type='text', name='vehicle_Brand')
+      label.vehicleAttr(for='vehicle_Brand') <b><i>Vehicle Brand</i></b>
+      input#vehicle_Brand(type='text', name='vehicle_Brand' placeholder="Enter vehicle brand")
+    br
     div.form-group
-      label.vehicleAttr(for='vehicle_model') vehicle Model
-      input#vehicle_model(type='text', name='vehicle_model')
+      label.vehicleAttr(for='vehicle_model') <b> <i>Vehicle Model</i></b>
+      input#vehicle_model(type='text', name='vehicle_model' placeholder="Enter vehicle model")
+    br
     div.form-group
-      label.vehicleAttr(for='vehicle_price') vehicle Price
-      input#vehicle_price(type='number', name='vehicle_price')
-    input(type="submit")
+      label.vehicleAttr(for='vehicle_price') <b> <i>Vehicle Price</i></b>
+      input#vehicle_price(type='number', name='vehicle_price' placeholder="Enter vehicle price")
+    br 
+    input(type="submit" class="btn btn-secondary")
   script.
     document.forms['vehicleForm'].addEventListener('submit', (event) => {
     event.preventDefault();
