@@ -1,17 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to my #{title} page. Here I'm learning about pug.
-  button(type="button", class="btn btn-secondary", onClick="doBump()") Press Me
-  div(id="bump") Bump the count.
-  script.
-    var count = 0;
-    var bump = 1;
-    function doBump(){
-      count = count + bump;
-      bump = bump + 1;
-      document.getElementById("bump").innerHTML="Count " + count + " with bump " + bump;
-    }
-  a(href="Vehicle") Go to Vehicle Page
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/vehicles") Take me to Vehicles
+    br
+    a(href="/logout") Logout
   
