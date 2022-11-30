@@ -15,13 +15,13 @@ block content
     form(id='vehicleForm', action=actionid, method="PUT")
       div.form-group
         label.vehicleAttr(for='vehicle_Brand') vehicle Brand
-        input#vehicle_Brand(type='text', name='vehicle_Brand', value=vehicle_Brand)
+        input#vehicle_Brand(type='text', name='vehicle_Brand', value=vehicle_Brand required)
       div.form-group
         label.vehicleAttr(for='vehicle_model') vehicle Model
-        input#vehicle_model(type='text', name='vehicle_model', value=vehicle_model)
+        input#vehicle_model(type='text', name='vehicle_model', value=vehicle_model required)
       div.form-group
         label.vehicleAttr(for='vehicle_price') vehicle Price
-        input#vehicle_price(type='number', name='vehicle_price', value=vehicle_price)
+        input#vehicle_price(type='number', name='vehicle_price', value=vehicle_price min=12000 max=10000000)
       input(type="submit")
   script.
     document.forms['vehicleForm'].addEventListener('submit', (event) => {
